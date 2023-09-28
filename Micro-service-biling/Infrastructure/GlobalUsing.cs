@@ -1,7 +1,1 @@
-﻿namespace Infrastructure
-{
-    public class GlobalUsing
-    {
-
-    }
-}
+﻿global using Domain.Entities;
