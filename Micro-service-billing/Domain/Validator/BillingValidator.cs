@@ -2,7 +2,7 @@
 
 namespace Domain.Validator
 {
-    internal class BilingValidator : AbstractValidator<Biling>
+    internal class BillingValidator : AbstractValidator<Billing>
     {
         //public CustomerValidator()
         //{
