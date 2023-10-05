@@ -7,21 +7,39 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    public static class StripeHandler
+    public class StripeHandler
     {
-        public static void HandleBill(Biling bill)
+#warning does not yet use parameters, due to test environment
+        public PaymentMethod CreatePaymentMethodFromCard(string Number, string CVC, int expMonth, int expYear)
+        {
+            var paymentMethodService = new PaymentMethodService();
+            var paymentMethod = paymentMethodService.Create(new()
+            {
+                Type = "card",
+                Card = new PaymentMethodCardOptions()
+                {
+                    Token = "tok_fr"
+                }
+            });
+            return paymentMethod;
+        }
+
+        public void HandleBill(Biling bill, PaymentMethod method)
         {
             var paymentIntentService = new PaymentIntentService();
-            var paymentIntent = paymentIntentService.Create(new PaymentIntentCreateOptions
+            var creationOptions = new PaymentIntentCreateOptions
             {
-                Amount = bill.Price,
+                Amount = (int)(bill.Price * 100),
                 Currency = "eur",
-                // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-                AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions
+                PaymentMethod = method.Id,
+                AutomaticPaymentMethods = new()
                 {
+                    AllowRedirects = "never",
                     Enabled = true,
-                },
-            });
+                }
+            };
+            var paymentIntent = paymentIntentService.Create(creationOptions);
+            paymentIntentService.Confirm(paymentIntent.Id);
         }
     }
 }

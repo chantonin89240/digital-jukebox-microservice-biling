@@ -1,3 +1,4 @@
+using Application;
 
 namespace Web
 {
@@ -13,6 +14,8 @@ namespace Web
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            DependencyInjection.Configure(builder.Services);
 
             var app = builder.Build();
 

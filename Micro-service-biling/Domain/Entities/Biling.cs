@@ -19,7 +19,7 @@ namespace Domain.Entities
         public int BarId { get; set; }
 
         [Column("price")]
-        public int Price { get; set; }
+        public double Price { get; set; }
 
         [Column("date_biling")]
         public DateTime DateBiling { get; set; }

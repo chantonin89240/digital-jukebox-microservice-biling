@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Web.DTOs.Up;
+using Application.DTOs.Up;
 
 namespace Application.Adapter
 {
@@ -13,12 +13,13 @@ namespace Application.Adapter
     /// </summary>
     public static class BillingAdapter
     {
-#warning Must include user from authentication. Not yet handled.
+#warning Must include user from authentication, which is not yet handled.
         public static Biling FromCreateBillingDtoUp(CreateBillingDtoUp DTO)
         {
             return new Biling
             {
                 Price = DTO.Amount,
+                BarId = DTO.BarIdentifier
             };
         }
     }
