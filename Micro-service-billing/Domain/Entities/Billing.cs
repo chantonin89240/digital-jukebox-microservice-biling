@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Biling
+    public class Billing
     {
         [Column("biling_id")]
         public int BilingId { get; set; }
@@ -24,9 +24,9 @@ namespace Domain.Entities
         [Column("date_biling")]
         public DateTime DateBiling { get; set; }
 
-        public Biling() { }
+        public Billing() { }
 
-        public Biling(int bilingId, int appUserId, int barId,  int price, DateTime dateBiling)
+        public Billing(int bilingId, int appUserId, int barId,  int price, DateTime dateBiling)
         {
             this.BilingId = bilingId;
             this.AppUserId = appUserId;

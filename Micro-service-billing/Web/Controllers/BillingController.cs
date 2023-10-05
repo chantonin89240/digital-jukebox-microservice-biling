@@ -49,7 +49,7 @@ namespace Web.Controllers
         /// <returns></returns>
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "ProjectOwner")]
         public ActionResult GetBillingsTotal()
-        {
+    {
             return Ok();
         }
     }

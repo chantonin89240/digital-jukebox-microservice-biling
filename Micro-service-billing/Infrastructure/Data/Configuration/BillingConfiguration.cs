@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Data.Configuration
 {
-    public class BilingConfiguration : IEntityTypeConfiguration<Biling>
+    public class BillingConfiguration : IEntityTypeConfiguration<Billing>
     {
-        public void Configure(EntityTypeBuilder<Biling> builder)
+        public void Configure(EntityTypeBuilder<Billing> builder)
         {
             builder.Property(b => b.AppUserId)
                 .IsRequired();

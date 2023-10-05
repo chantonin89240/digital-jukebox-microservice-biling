@@ -3,11 +3,11 @@ using System.Reflection;
 
 namespace Domain.EntitiesContext
 {
-    public class BilingDbContext : DbContext
+    public class BillingDbContext : DbContext
     {
-        public DbSet<Biling> Bilings { get; set; }
+        public DbSet<Billing> Bilings { get; set; }
 
-        public BilingDbContext(DbContextOptions<BilingDbContext> options) : base(options) { }
+        public BillingDbContext(DbContextOptions<BillingDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
