@@ -13,7 +13,7 @@ namespace Infrastructure
     {
         public static void Configure(IServiceCollection services)
         {
-            services.AddDbContext<BilingDbContext>();
+            services.AddDbContext<BillingDbContext>();
 
             services.AddTransient<StripeHandler>();
         }

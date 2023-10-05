@@ -24,7 +24,7 @@ namespace Infrastructure.Data
             return paymentMethod;
         }
 
-        public void HandleBill(Biling bill, PaymentMethod method)
+        public void HandleBill(Billing bill, PaymentMethod method)
         {
             var paymentIntentService = new PaymentIntentService();
             var creationOptions = new PaymentIntentCreateOptions
