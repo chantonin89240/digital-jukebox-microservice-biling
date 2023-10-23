@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.DTOs.Up;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Stripe;
 
 namespace Application.Adapter
 {
@@ -22,6 +23,19 @@ namespace Application.Adapter
                 Price = DTO.Amount,
                 BarId = DTO.BarIdentifier
             };
+        }
+
+        public static Billing FromStripePaymentIntent(PaymentIntent intent)
+        {
+            var output = new Billing
+            {
+                AppUserId = int.Parse(intent.Metadata.First(pair => pair.Key == "AppUserId").Value),
+                DateBilling = DateTime.Now,
+                Price = intent.Amount,
+                BarId = int.Parse(intent.Metadata.First(pair => pair.Key == "BarId").Value)
+            };
+
+            return output;
         }
     }
 }

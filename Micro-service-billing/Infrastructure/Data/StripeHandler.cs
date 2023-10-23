@@ -9,37 +9,30 @@ namespace Infrastructure.Data
 {
     public class StripeHandler
     {
-#warning does not yet use parameters, due to test environment
-        public PaymentMethod CreatePaymentMethodFromCard(string Number, string CVC, int expMonth, int expYear)
-        {
-            var paymentMethodService = new PaymentMethodService();
-            var paymentMethod = paymentMethodService.Create(new()
-            {
-                Type = "card",
-                Card = new PaymentMethodCardOptions()
-                {
-                    Token = "tok_fr"
-                }
-            });
-            return paymentMethod;
-        }
 
-        public void HandleBill(Billing bill, PaymentMethod method)
+        public PaymentIntent CreateIntentFromBill(Billing bill)
         {
             var paymentIntentService = new PaymentIntentService();
+
+            IEnumerable<KeyValuePair<string, string>> Metadata = new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>("AppUserId",bill.AppUserId.ToString()),
+                new KeyValuePair<string, string>("BarId",bill.BarId.ToString())
+            };
+
             var creationOptions = new PaymentIntentCreateOptions
             {
                 Amount = (int)(bill.Price * 100),
                 Currency = "eur",
-                PaymentMethod = method.Id,
                 AutomaticPaymentMethods = new()
                 {
                     AllowRedirects = "never",
                     Enabled = true,
-                }
+                },
+                Metadata = new(Metadata)
             };
-            var paymentIntent = paymentIntentService.Create(creationOptions);
-            paymentIntentService.Confirm(paymentIntent.Id);
+            
+            return paymentIntentService.Create(creationOptions);
         }
     }
 }

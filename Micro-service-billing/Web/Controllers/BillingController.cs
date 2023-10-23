@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Application.DTOs.Up;
+using Stripe;
 
 namespace Web.Controllers
 {
-    [Route("Billing")]
+    [Route("[controller]")]
     public class BillingController : Controller
     {
         private BillingService service;
@@ -30,7 +31,31 @@ namespace Web.Controllers
             return Ok(billing);
         }
 
-        [Route("/")]
+        [Route("Stripehook")]
+        [HttpPost]
+        public async Task<ActionResult> StripeHook()
+        {
+            var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+            Event e;
+            try
+            {
+                e = EventUtility.ParseEvent(json);
+            }
+            catch(Exception) { return BadRequest(json); }
+
+            try
+            {
+                service.HandleStripeEvent(e);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+            return Ok();
+        }
+
+        [Route("")]
         [HttpGet]
         /// <summary>
         /// Gets a list of bills made by a user.
