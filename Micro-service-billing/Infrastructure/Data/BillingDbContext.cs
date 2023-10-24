@@ -22,8 +22,6 @@ namespace Domain.EntitiesContext
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(modelBuilder);
-
         }
-
     }
 }

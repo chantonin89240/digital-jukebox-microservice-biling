@@ -1,21 +1,30 @@
 ﻿using Domain.EntitiesContext;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    public class DependencyInjection
+    public static class DependencyInjection
     {
-        public static void Configure(IServiceCollection services)
+        public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<BillingDbContext>();
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-            services.AddTransient<StripeHandler>();
+            services.AddDbContext<BillingDbContext>((options) =>
+            {
+                options.UseSqlServer(connectionString);
+            });
+
+            //services.AddScoped<IDomainEventService, DomainEventService>();
+
+            services.AddScoped<BillingDbContextInitializer>();
+
+            var context = services.BuildServiceProvider().GetRequiredService<BillingDbContext>();
+            context.Database.MigrateAsync();
+
+            return services;
         }
     }
 }

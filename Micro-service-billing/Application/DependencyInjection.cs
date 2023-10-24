@@ -1,5 +1,6 @@
 ﻿using Application.Service;
 using Infrastructure;
+using Infrastructure.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Stripe;
 using System;
@@ -16,9 +17,9 @@ namespace Application
         {
             StripeConfiguration.ApiKey = "sk_test_51NvGSVB6THHP0CX0uPfJiPFYXE6WRlraGFVqRXNnrc1IV3CuJUBMzuWZvqmkrom8r5ynLmyOtaOOqrr9VEuLkSYf00UHdxN0kR";
 
-            Infrastructure.DependencyInjection.Configure(services);
-
+            services.AddScoped<StripeHandler>();
             services.AddScoped<BillingService>();
+            
         }
     }
 }
