@@ -6,7 +6,7 @@ namespace Domain.Validator
     {
         //public CustomerValidator()
         //{
-        //    RuleFor(biling => biling.AppUserId).NotNull();
+        //    RuleFor(Billing => Billing.AppUserId).NotNull();
         //}
     }
 }
